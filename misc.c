@@ -4,29 +4,55 @@
 
 // Can also check if q->tail == q->head
 // That should mean that it is empty
-int QisEmpty(q_t *q) { return (q->size == 0) ? TRUE : FALSE; }
+int QisEmpty(q_t *q) { return (q->head == -1) ? TRUE : FALSE; }
 
-int QisFull(q_t *q) { return (q->size == Q_SIZE) ? TRUE : FALSE; }
+int QisFull(q_t *q)
+{
+    if ((q->head == q->tail + 1) || (q->head == 0 && q->tail == Q_SIZE - 1))
+    {
+        return TRUE;
+    }
 
-int DeQ(q_t *q) {
-  if (QisEmpty(q))
-    return NA;
-
-  int pid = q->q[q->head];
-  q->head = (q->head + 1) % Q_SIZE;
-  q->size -= 1;
-  return pid;
+    return FALSE;
 }
 
-void EnQ(int pid, q_t *q) {
-  if (QisFull(q)) {
-    cons_printf("Panic: queue is full, cannot EnQ!\n");
-    breakpoint();
-  } else {
-    q->q[q->tail] = pid;
-    q->tail = (q->tail + 1) % Q_SIZE;
-    q->size += 1;
-  }
+int DeQ(q_t *q)
+{
+    int pid;
+    if (QisEmpty(q))
+    {
+        return NA;
+    }
+    else
+    {
+        pid = q->q[q->head];
+
+        if (q->head == q->tail)
+        {
+            q->head = -1;
+            q->tail = -1;
+        }
+        else
+        {
+            q->head = (q->head + 1) % Q_SIZE;
+        }
+        return pid;
+    }
+}
+
+void EnQ(int pid, q_t *q)
+{
+    if (QisFull(q))
+    {
+        cons_printf("Panic: queue is full, cannot EnQ!\n");
+        breakpoint();
+    }
+    else
+    {
+        q->q[q->tail] = pid;
+        q->tail = (q->tail + 1) % Q_SIZE;
+        q->size += 1;
+    }
 }
 
 program function Bzero, given a char pointer and unsigned bytes:
