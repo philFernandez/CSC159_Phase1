@@ -25,17 +25,22 @@ int DeQ(q_t *q)
     }
     else
     {
+        // Get the number pointed to by head
         pid = q->q[q->head];
 
+        // Adjust head pointer
         if (q->head == q->tail)
-        {
+        { // If this is the last number in q, reset the q
             q->head = -1;
             q->tail = -1;
         }
         else
         {
+            // Adjust head pointer in circular fashion
             q->head = (q->head + 1) % Q_SIZE;
         }
+        // Decrement q->size
+        q->size -= 1;
         return pid;
     }
 }
