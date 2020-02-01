@@ -44,7 +44,6 @@ int DeQ(q_t *q)
         return pid;
     }
 }
-
 void EnQ(int pid, q_t *q)
 {
     if (QisFull(q))
@@ -54,8 +53,10 @@ void EnQ(int pid, q_t *q)
     }
     else
     {
-        q->q[q->tail] = pid;
+        if (q->head == -1)
+            q->head = 0;
         q->tail = (q->tail + 1) % Q_SIZE;
+        q->q[q->tail] = pid;
         q->size += 1;
     }
 }
