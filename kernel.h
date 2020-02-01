@@ -3,30 +3,29 @@
 #ifndef __KERNEL__
 #define __KERNEL__
 
-Define these constants:
 // H/W & I/O stuff
-CS 8                   // Code Segment register
-FLAGS 0x212            // CPU flags for trapframe
-INTR_TABLE 0x3914c     // location of the interrupt table
-TIMER 32               // timer event code
-PIC_MASK_REG 0x21      // I/O # of PIC mask register
-PIC_MASK ~0x01         // mask value for PIC mask
-PIC_CONTROL_REG 0x20   // I/O # of PIC control register
-TIMER_ACK 0x60         // control code sent to PIC
-VIDEO_MASK 0x0f00      // bold white on black
-VIDEO_START 0xb8000    // upper-left corner
+#define CS 8                   // Code Segment register
+#define FLAGS 0x212            // CPU flags for trapframe
+#define INTR_TABLE 0x3914c     // location of the interrupt table
+#define TIMER 32               // timer event code
+#define PIC_MASK_REG 0x21      // I/O # of PIC mask register
+#define PIC_MASK ~0x01         // mask value for PIC mask
+#define PIC_CONTROL_REG 0x20   // I/O # of PIC control register
+#define TIMER_ACK 0x60         // control code sent to PIC
+#define VIDEO_MASK 0x0f00      // bold white on black
+#define VIDEO_START 0xb8000    // upper-left corner
 
 // system limit stuff
-TIME_SIZE 300          // max timer count, then rotate process
-PROC_SIZE 20            // max number of processes
-STACK_SIZE 4096        // process stack in bytes
-Q_SIZE 20              // capacity of a process queue
+#define TIME_SIZE 300          // max timer count, then rotate process
+#define PROC_SIZE 20            // max number of processes
+#define STACK_SIZE 4096        // process stack in bytes
+#define Q_SIZE 20              // capacity of a process queue
 
 // prog logic stuff
-TRUE 1
-FALSE 0
-NUL 0
-NA -1
+#define TRUE 1
+#define FALSE 0
+#define NUL 0
+#define NA -1
 
 typedef void (*func_p_t)(void); // void-return function pointer type
 
@@ -40,7 +39,7 @@ typedef struct {
    state_t state;            // state of process
    unsigned run_tick, total_tick; // runtime of process and lifespan
    tf_t *tf_p;               // points to proc's trapframe
-} pcb_t;                     
+} pcb_t;
 
 typedef struct {             // circular queue
    int head, tail, size;     // head dequeue, tail enqueue, current size

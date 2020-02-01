@@ -1,34 +1,40 @@
 // misc.c, 159
+#include <kernel.h>
+#include <spede.h>
 
-include spede.h and kernel.h
+// Can also check if q->tail == q->head
+// That should mean that it is empty
+int QisEmpty(q_t *q) { return (q->size == 0) ? TRUE : FALSE; }
 
-program function QisEmpty (given a pointer to a queue):
-   return TRUE if queue is empty, else FALSE
+int QisFull(q_t *q) { return (q->size == Q_SIZE) ? TRUE : FALSE; }
 
-program function QisFull (given a pointer to a queue):
-   return TRUE if queue is full, else FALSE
+int DeQ(q_t *q) {
+  if (QisEmpty(q))
+    return NA;
 
-program function DeQ (given a pointer to a queue):
-   if empty, return NA
-   get the number pointed to by the head in the queue
-   move the head, alter the size
-   return the number
+  int pid = q->q[q->head];
+  q->head = (q->head + 1) % Q_SIZE;
+  q->size -= 1;
+  return pid;
+}
 
-program function EnQ (given a number and pointer to a queue):
-   if the queue is full:
-      cons_printf("Panic: queue is full, cannot EnQ!\n");
-      go into GDB // breakpoint();
-
-   enqueue the number to where the tail points to in the queue
-   move the tail, alter the size
+void EnQ(int pid, q_t *q) {
+  if (QisFull(q)) {
+    cons_printf("Panic: queue is full, cannot EnQ!\n");
+    breakpoint();
+  } else {
+    q->q[q->tail] = pid;
+    q->tail = (q->tail + 1) % Q_SIZE;
+    q->size += 1;
+  }
+}
 
 program function Bzero, given a char pointer and unsigned bytes:
-   NUL-fill each byte starting at where the pointer points
-   for a number of bytes
+NUL-fill each byte starting at where the pointer points
+for a number of bytes
 
 program function MemCpy, given two char pointers as the starting
 location of the source of copy, and the destination location of
 the copy, and an unsigned number of bytes:
-   copy each byte from the starting location to the destination
-   for a number of bytes
-
+copy each byte from the starting location to the destination
+for a number of bytes

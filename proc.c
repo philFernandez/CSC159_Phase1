@@ -2,14 +2,23 @@
 // all user processes are coded here
 // processes do not R/W kernel data or call kernel code, only via syscalls
 
-include spede.h and kernel.h
+#include <spede.h>
+#include <kernel.h>
 
-prototype any subroutines of Clock() here
+/*prototype any subroutines of Clock() here*/
 
-program a void-return function Clock that takes no argument {
+
+void Clock() {
    int i;
    char str[] = "    ";  // str for 4-digits, plus NUL
    unsigned short *p;
+   while(1) {
+
+   }
+}
+
+
+program a void-return function Clock that takes no argument {
 
    an infinite loop:
       if sys_tick is now at a new second
