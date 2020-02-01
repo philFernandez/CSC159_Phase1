@@ -1,6 +1,7 @@
 // misc.c, 159
-#include <kernel.h>
+#include "kernel.h" // uses <> brackets in original
 #include <spede.h>
+#include <string.h>
 
 // Can also check if q->tail == q->head
 // That should mean that it is empty
@@ -61,12 +62,9 @@ void EnQ(int pid, q_t *q)
     }
 }
 
-program function Bzero, given a char pointer and unsigned bytes:
-NUL-fill each byte starting at where the pointer points
-for a number of bytes
+void Bzero(char *s, unsigned n) { memset(s, '0', n * sizeof(s)); }
 
-program function MemCpy, given two char pointers as the starting
-location of the source of copy, and the destination location of
-the copy, and an unsigned number of bytes:
-copy each byte from the starting location to the destination
-for a number of bytes
+void MemCpy(char *c_ptr1, char *c_ptr2, unsigned n)
+{
+    memcpy(c_ptr1, c_ptr2, n * sizeof(c_ptr2));
+}

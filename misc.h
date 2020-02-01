@@ -17,12 +17,11 @@ DeQ(q_t*);
 void
 EnQ(int, q_t*);
 
+void
+Bzero(char*, unsigned);
 
-//typedef struct {             // circular queue
-   //int head, tail, size;     // head dequeue, tail enqueue, current size
-   //int q[Q_SIZE];            // PID's are queued in que[] array
-//} q_t;
-
+void
+MemCpy(char*, char*, unsigned);
 
 #endif
 
