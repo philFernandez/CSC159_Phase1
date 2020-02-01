@@ -18,7 +18,9 @@ char stack[PROC_SIZE][STACK_SIZE];
 unsigned sys_tick;
 struct i386_gate *intr_table = (struct i386_gate *)0x3914c;
 
-void CreateProc(func_p_t *func_ptr) {}
+void CreateProc(func_p_t *func_ptr)
+{
+}
 
 program a void - returning function CreateProc,
     that takes an argument of the func_p_t type:

@@ -12,25 +12,26 @@ int strLen(char *);
 
 void Clock()
 {
-    int i;
+    int i = 0;
     char str[] = "    "; // str for 4-digits, plus NUL
     unsigned short *p;
     while (1)
     {
+        if (sys_tick % 60 == 0)
+        {
+            i += 1;
+            numberToString(i, str);
+            *p = VIDEO_START;
+            *p += 75;
+            int j = 0;
+            while (str[j] != '\0')
+            {
+                *p = str[j] + VIDEO_MASK;
+                j++;
+            }
+        }
     }
 }
-
-/*program a void - return function Clock that takes no argument*/
-/*{*/
-
-/*an infinite loop*/
-/*: if sys_tick is now at a new second convert the current second count*/
-/*number to str set p to VIDEO_START(1st row, 1st column)*/
-/*advance p by 75 columns(to the right, on the same row)*/
-
-/*loop thru each char in str*/
-/*: *p = the character + VIDEO_MASK*/
-/*}*/
 
 /*
  * Takes number and reference to str. str is populated with number
