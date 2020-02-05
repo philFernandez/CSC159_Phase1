@@ -32,8 +32,6 @@ void CreateProc(func_p_t fptr)
     pcb[cur_pid].state = READY;
     pcb[cur_pid].tf_p = &stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
-    stack[cur_pid][0] = (char)(pcb + cur_pid)->tf_p;
-
     // use tf_p to set its efl cs eip
 }
 
