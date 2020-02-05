@@ -1,11 +1,14 @@
 // misc.c, 159
 #include "kernel.h" // uses <> brackets in original
-#include <spede.h>
+#include "spede.h"
 #include <string.h>
 
 // Can also check if q->tail == q->head
 // That should mean that it is empty
-int QisEmpty(q_t *q) { return (q->head == -1) ? TRUE : FALSE; }
+int QisEmpty(q_t *q)
+{
+    return (q->head == -1) ? TRUE : FALSE;
+}
 
 int QisFull(q_t *q)
 {
@@ -62,7 +65,12 @@ void EnQ(int pid, q_t *q)
     }
 }
 
-void Bzero(char *s, unsigned n) { memset(s, '0', n * sizeof(s)); }
+void Bzero(char *s, unsigned n)
+{
+    memset(s, 0x0, n);
+    // or
+    /*bzero(s, n); */
+}
 
 void MemCpy(char *c_ptr1, char *c_ptr2, unsigned n)
 {

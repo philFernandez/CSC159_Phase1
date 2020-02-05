@@ -3,7 +3,7 @@
 // processes do not R/W kernel data or call kernel code, only via syscalls
 
 #include "kernel.h" // was using <kernel.h>
-#include <spede.h>
+#include "spede.h"
 #include <stdio.h>
 #include <string.h>
 
