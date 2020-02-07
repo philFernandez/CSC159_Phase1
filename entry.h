@@ -1,4 +1,5 @@
 // entry.h
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 // prototypes those in entry.S
 
 #ifndef __ENTRY__

@@ -1,6 +1,6 @@
 // boot.c, 159, phase 1
-//
-// Team Name: ??????? (Members: ??????...)
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
+
 #include "entry.h"
 #include "kernel.h"
 #include "misc.h"

@@ -1,4 +1,5 @@
 // kernel.h, 159, kernel stuff prototyped here
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
 #ifndef __KERNEL__
 #define __KERNEL__

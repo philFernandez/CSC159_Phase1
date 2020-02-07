@@ -1,10 +1,11 @@
 // misc.c, 159
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
+
 #include "kernel.h" // uses <> brackets in original
 #include "spede.h"
 #include <string.h>
 
-// Can also check if q->tail == q->head
-// That should mean that it is empty
+// Impliment Queue for unused_q and ready_q
 int QisEmpty(q_t *q)
 {
     return (q->head == -1) ? TRUE : FALSE;
@@ -48,6 +49,7 @@ int DeQ(q_t *q)
         return pid;
     }
 }
+
 void EnQ(int pid, q_t *q)
 {
     if (QisFull(q))

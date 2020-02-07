@@ -1,4 +1,5 @@
 // misc.h, 159
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
 #ifndef __MISC__
 #define __MISC__

@@ -1,6 +1,5 @@
 // kernel.c, 159, phase 1
-
-// Team Name: ??????? (Members: ??????...)
+// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
 #include "kernel.h"
 #include "entry.h"
