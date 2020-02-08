@@ -3,7 +3,7 @@
 
 #include "kernel.h" // uses <> brackets in original
 #include "spede.h"
-#include <string.h>
+//#include <string.h>
 
 // Impliment Queue for unused_q and ready_q
 int QisEmpty(q_t *q)
@@ -69,12 +69,12 @@ void EnQ(int pid, q_t *q)
 
 void Bzero(char *s, unsigned n)
 {
-    memset(s, 0x0, n);
+    // memset(s, 0x0, n);
     // or
     /*bzero(s, n); */
 }
 
 void MemCpy(char *c_ptr1, char *c_ptr2, unsigned n)
 {
-    memcpy(c_ptr1, c_ptr2, n * sizeof(c_ptr2));
+    // memcpy(c_ptr1, c_ptr2, n * sizeof(c_ptr2));
 }

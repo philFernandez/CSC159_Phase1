@@ -16,7 +16,8 @@ void TimerService(tf_t *tf_p)
     if (cons_kbhit())
     {
         ch = cons_getchar();
-        if(ch == 'g')breakpoint();
+        if (ch == 'g')
+            breakpoint();
     }
 
     // notify PIC the timer is serviced
@@ -38,13 +39,13 @@ void TimerService(tf_t *tf_p)
 
 void Swapper(void)
 {
-    if(QisEmpty(ready_q))
+    if (QisEmpty(&ready_q))
     {
         cons_printf("Kernel: panic, no more process ready to run!\n");
         breakpoint();
     }
 
-    cur_pid = DeQ(ready_q);
+    cur_pid = DeQ(&ready_q);
     pcb[cur_pid].run_tick = 0;
     pcb[cur_pid].state = RUN;
 }

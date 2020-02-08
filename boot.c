@@ -1,3 +1,4 @@
+
 // boot.c, 159, phase 1
 // Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
@@ -7,12 +8,11 @@
 #include "proc.h"
 #include "spede.h"
 
-
 int cur_pid; // for currently selected PID
 q_t unused_q;
 q_t ready_q;
 
-pcb_t pcb[PROC_SIZE];               // process control block
+pcb_t pcb[PROC_SIZE]; // process control block
 char stack[PROC_SIZE][STACK_SIZE];
 
 unsigned sys_tick;
@@ -29,12 +29,12 @@ void CreateProc(func_p_t p)
     Bzero(&stack[cur_pid][0], STACK_SIZE);
 
     pcb[cur_pid].state = READY;
-    pcb[cur_pid].tf_p = &stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
+    pcb[cur_pid].tf_p = (tf_t *)&stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
     // use tf_p to set its efl cs eip
-    pcb[cur_pid].tf_p->eif = efl;
-    pcb[cur_pid].tf_p->cs = cs;
-    pcb[cur_pid].tf_p->eip = (int) p;
+    pcb[cur_pid].tf_p->efl = 0;
+    pcb[cur_pid].tf_p->cs = CS;
+    pcb[cur_pid].tf_p->eip = 0;
 }
 
 void main(void)
@@ -64,10 +64,9 @@ void main(void)
     outportb(PIC_MASK_REG, PIC_MASK);
     asm("sti");
 
-    func_p_t clockPtr = (void *)Clock;
-    clockPtr();
+    // func_p_t clockPtr = (void *)Clock;
 
-    CreateProc(clockPtr);
+    CreateProc((func_p_t)Clock);
     // call Loader to load the trapframe of the new process
     cur_pid = 0;
     Loader(pcb[0].tf_p);
