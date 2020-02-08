@@ -26,14 +26,14 @@ void CreateProc(func_p_t p)
     EnQ(cur_pid, &ready_q);
 
     Bzero((char *)&pcb[cur_pid], sizeof(q_t));
-    // second index to stack probably shouldn't be 0
+
     Bzero(&stack[cur_pid][0], STACK_SIZE);
 
     pcb[cur_pid].state = READY;
     pcb[cur_pid].tf_p = (tf_t *)&stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
     // use tf_p to set its efl cs eip
-    // PG 97 has register info
+    // Pg 97 has register info
     pcb[cur_pid].tf_p->efl = FLAGS;
     pcb[cur_pid].tf_p->cs = CS;
     pcb[cur_pid].tf_p->eip = (int)p;

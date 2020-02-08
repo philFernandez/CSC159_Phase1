@@ -5,6 +5,7 @@
 #ifndef __ENTRY__
 #define __ENTRY__
 
+
 #ifndef ASSEMBLER  // skip below if ASSEMBLER defined (from an assembly code)
                    // since below is not in assembler syntax
 __BEGIN_DECLS
