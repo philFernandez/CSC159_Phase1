@@ -66,7 +66,19 @@ void numberToString(int number, char *str)
 /*
  * Return str length
  */
-int strLen(char *str)
+int strLen(char *s)
 {
-    return strlen(str);
+    int length = 0;
+    char c = *(s + length);
+
+    // '\0' marks end of char array (string)
+    // count up all chars before reaching '\0'
+    // to get string length
+    while (c != '\0')
+    {
+        length++;
+        c = *(s + length);
+    }
+
+    return length;
 }
