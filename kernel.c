@@ -33,5 +33,18 @@ void TimerService(tf_t *tf_p)
         cur_pid = NA;
         Swapper();
     }
+    Loader(pcb[cur_pid].tf_p);
 }
 
+void Swapper(void)
+{
+    if(QisEmpty(ready_q))
+    {
+        cons_printf("Kernel: panic, no more process ready to run!\n");
+        breakpoint();
+    }
+
+    cur_pid = DeQ(ready_q);
+    pcb[cur_pid].run_tick = 0;
+    pcb[cur_pid].state = RUN;
+}
