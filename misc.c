@@ -73,8 +73,3 @@ void Bzero(char *s, unsigned n)
     // or
     /*bzero(s, n); */
 }
-
-void MemCpy(char *c_ptr1, char *c_ptr2, unsigned n)
-{
-    // memcpy(c_ptr1, c_ptr2, n * sizeof(c_ptr2));
-}
