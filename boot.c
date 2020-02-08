@@ -26,6 +26,7 @@ void CreateProc(func_p_t p)
     EnQ(cur_pid, &ready_q);
 
     Bzero((char *)&pcb[cur_pid], sizeof(q_t));
+    // second index to stack probably shouldn't be 0
     Bzero(&stack[cur_pid][0], STACK_SIZE);
 
     pcb[cur_pid].state = READY;
@@ -34,7 +35,7 @@ void CreateProc(func_p_t p)
     // use tf_p to set its efl cs eip
     pcb[cur_pid].tf_p->efl = 0;
     pcb[cur_pid].tf_p->cs = CS;
-    pcb[cur_pid].tf_p->eip = 0;
+    pcb[cur_pid].tf_p->eip = (int)p;
 }
 
 void main(void)
@@ -69,5 +70,5 @@ void main(void)
     CreateProc((func_p_t)Clock);
     // call Loader to load the trapframe of the new process
     cur_pid = 0;
-    Loader(pcb[0].tf_p);
+    Loader(pcb[cur_pid].tf_p);
 }

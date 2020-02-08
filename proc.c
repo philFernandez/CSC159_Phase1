@@ -38,9 +38,29 @@ void Clock()
 /*
  * Takes number and reference to str. str is populated with number
  */
+// http://athena.ecs.csus.edu/~changw/159/grades/C-Test-Code/strings/itoa.c
 void numberToString(int number, char *str)
 {
-    sprintf(str, "%d", number);
+    int j = 0;
+    char tmp;
+
+    str[0] = '0';
+
+    while (number)
+    {
+        if (str[j] == '\0')
+            break;
+        str[j] = (number % 10) + '0';
+        number /= 10;
+        j++;
+    }
+
+    for (number = 0; number < j / 2; number++)
+    {
+        tmp = str[number];
+        str[number] = str[j - number - 1];
+        str[j - number - 1] = tmp;
+    }
 }
 
 /*
