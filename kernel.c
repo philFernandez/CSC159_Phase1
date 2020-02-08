@@ -27,10 +27,12 @@ void TimerService(tf_t *tf_p)
     pcb[cur_pid].run_tick++;
     pcb[cur_pid].total_tick++;
 
+    // I think this is where process ends up when it is done running
     if (pcb[cur_pid].run_tick == TIME_SIZE)
     {
         EnQ(cur_pid, &ready_q);
-        pcb[cur_pid].state = READY;
+        // changed from READY to UNSED for testing
+        pcb[cur_pid].state = UNUSED;
         cur_pid = NA;
         Swapper();
     }

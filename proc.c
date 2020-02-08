@@ -23,7 +23,7 @@ void Clock()
             i += 1;
             numberToString(i, str);
             *p = (unsigned short)VIDEO_START;
-            *p += 75;
+            *p += 0x4B;
             while (str[j] != '\0')
             {
                 *p = str[j] + VIDEO_MASK;

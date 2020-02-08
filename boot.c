@@ -33,7 +33,8 @@ void CreateProc(func_p_t p)
     pcb[cur_pid].tf_p = (tf_t *)&stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
     // use tf_p to set its efl cs eip
-    pcb[cur_pid].tf_p->efl = 0;
+    // PG 97 has register info
+    pcb[cur_pid].tf_p->efl = FLAGS;
     pcb[cur_pid].tf_p->cs = CS;
     pcb[cur_pid].tf_p->eip = (int)p;
 }
