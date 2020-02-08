@@ -69,7 +69,9 @@ void EnQ(int pid, q_t *q)
 
 void Bzero(char *s, unsigned n)
 {
-    // memset(s, 0x0, n);
-    // or
-    /*bzero(s, n); */
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        s[i] = '\0';
+    }
 }
