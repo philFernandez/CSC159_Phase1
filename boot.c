@@ -32,12 +32,9 @@ void CreateProc(func_p_t p)
     pcb[cur_pid].tf_p = &stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
     // use tf_p to set its efl cs eip
-
     pcb[cur_pid].tf_p->eif = efl;
     pcb[cur_pid].tf_p->cs = cs;
     pcb[cur_pid].tf_p->eip = (int) p;
-
-
 }
 
 void main(void)
@@ -72,4 +69,6 @@ void main(void)
 
     CreateProc(clockPtr);
     // call Loader to load the trapframe of the new process
+    cur_pid = 0;
+    Loader(pcb[0].tf_p);
 }
