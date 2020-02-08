@@ -6,33 +6,31 @@
 
 #include "kernel.h" // was using <kernel.h>
 #include "spede.h"
-//#include <stdio.h>
-//#include <string.h>
 
 void numberToString(int, char *);
 int strLen(char *);
 
 void Clock()
 {
-    // int i = 0;
-    // char str[] = "    "; // str for 4-digits, plus NUL
-    // unsigned short *p;
-    // while (1)
-    //{
-    // if (sys_tick % 60 == 0)
-    //{
-    // i += 1;
-    // numberToString(i, str);
-    //*p = VIDEO_START;
-    //*p += 75;
-    // int j = 0;
-    // while (str[j] != '\0')
-    //{
-    //*p = str[j] + VIDEO_MASK;
-    // j++;
-    //}
-    //}
-    //}
+    int i = 0;
+    int j = 0;
+    char str[] = "    "; // str for 4-digits, plus NUL
+    unsigned short *p;
+    while (1)
+    {
+        if (sys_tick % 100 == 0)
+        {
+            i += 1;
+            numberToString(i, str);
+            *p = (unsigned short)VIDEO_START;
+            *p += 75;
+            while (str[j] != '\0')
+            {
+                *p = str[j] + VIDEO_MASK;
+                j++;
+            }
+        }
+    }
 }
 
 /*
