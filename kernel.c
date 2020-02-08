@@ -1,11 +1,11 @@
 // kernel.c, 159, phase 1
 // Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
-#include "kernel.h"
-#include "entry.h"
-#include "misc.h"
-#include "proc.h"
 #include "spede.h"
+#include "kernel.h"
+#include "proc.h"
+#include "misc.h"
+#include "entry.h"
 
 void TimerService(tf_t *tf_p)
 {

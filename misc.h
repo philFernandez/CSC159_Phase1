@@ -1,9 +1,10 @@
 // misc.h, 159
 // Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
-#include "kernel.h"
 
 #ifndef __MISC__
 #define __MISC__
+
+#include "kernel.h"
 
 
 int QisEmpty(q_t*);

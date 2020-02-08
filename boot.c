@@ -2,11 +2,11 @@
 // boot.c, 159, phase 1
 // Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
-#include "entry.h"
+#include "spede.h"
 #include "kernel.h"
+#include "entry.h"
 #include "misc.h"
 #include "proc.h"
-#include "spede.h"
 
 int cur_pid; // for currently selected PID
 q_t unused_q;

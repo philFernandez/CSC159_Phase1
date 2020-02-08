@@ -1,5 +1,5 @@
+
 // spede.h, 159, needed spede include
-// Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
 #ifndef __SPEDE__
 #define __SPEDE__

@@ -1,8 +1,8 @@
 // misc.c, 159
 // Team Name: ChaOS (Members: Aditya Tuladhar, Marcus Huston, Phil Fernandez)
 
-#include "kernel.h" // uses <> brackets in original
 #include "spede.h"
+#include "kernel.h"
 //#include <string.h>
 
 // Impliment Queue for unused_q and ready_q

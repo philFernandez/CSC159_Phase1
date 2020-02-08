@@ -4,8 +4,8 @@
 // all user processes are coded here
 // processes do not R/W kernel data or call kernel code, only via syscalls
 
-#include "kernel.h" // was using <kernel.h>
 #include "spede.h"
+#include "kernel.h" // was using <kernel.h>
 
 void numberToString(int, char *);
 int strLen(char *);
