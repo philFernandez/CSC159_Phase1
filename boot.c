@@ -7,21 +7,20 @@
 #include "proc.h"
 #include "spede.h"
 
-// kernel data are all declared here (prototyped in kernel.h):
 
 int cur_pid; // for currently selected PID
 q_t unused_q;
 q_t ready_q;
 
-pcb_t pcb[PROC_SIZE];
+pcb_t pcb[PROC_SIZE];               // process control block
 char stack[PROC_SIZE][STACK_SIZE];
 
 unsigned sys_tick;
 struct i386_gate *intr_table;
 
-void CreateProc(func_p_t fptr)
+void CreateProc(func_p_t p)
 {
-    // Get unsed PID from unused_q
+    // Get unused PID from unused_q
     cur_pid = DeQ(&unused_q);
     // Add PID to ready_q
     EnQ(cur_pid, &ready_q);
@@ -33,6 +32,12 @@ void CreateProc(func_p_t fptr)
     pcb[cur_pid].tf_p = &stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
     // use tf_p to set its efl cs eip
+
+    pcb[cur_pid].tf_p->eif = efl;
+    pcb[cur_pid].tf_p->cs = cs;
+    pcb[cur_pid].tf_p->eip = (int) p;
+
+
 }
 
 void main(void)
