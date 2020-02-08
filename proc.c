@@ -20,13 +20,12 @@ void Clock()
     {
         if (sys_tick % 100 == 0)
         {
-            i += 1;
-            numberToString(i, str);
+            numberToString(sys_tick / 100, str);
             p = (unsigned short *)VIDEO_START;
             p += 75;
             while (str[j] != '\0')
             {
-                *p = str[j] + VIDEO_MASK;
+                *p = *str + VIDEO_MASK;
                 j++;
             }
         }
