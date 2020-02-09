@@ -46,8 +46,8 @@ void main(void)
     sys_tick = 0;
     intr_table = (struct i386_gate *)INTR_TABLE;
     // clear both unused_q and ready_q
-    Bzero((char *)&unused_q, Q_SIZE);
-    Bzero((char *)&ready_q, Q_SIZE);
+    Bzero((char *)&unused_q, sizeof(q_t));
+    Bzero((char *)&ready_q, sizeof(q_t));
 
     unused_q.head = -1;
     unused_q.tail = -1;
@@ -71,5 +71,7 @@ void main(void)
     CreateProc((func_p_t)Clock);
     // call Loader to load the trapframe of the new process
     cur_pid = 0;
+    pcb[cur_pid].run_tick = 0;
+    pcb[cur_pid].total_tick = 0;
     Loader(pcb[cur_pid].tf_p);
 }

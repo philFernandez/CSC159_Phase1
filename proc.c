@@ -7,25 +7,27 @@
 #include "spede.h"
 #include "kernel.h" // was using <kernel.h>
 
-void numberToString(int, char *);
+void toStr(int, char *);
 int strLen(char *);
 
 void Clock()
 {
-    int i = 0;
-    int j = 0;
+    int j;
     char str[] = "    "; // str for 4-digits, plus NUL
     unsigned short *p;
     while (1)
     {
+        sys_tick++;
         if (sys_tick % 100 == 0)
         {
-            numberToString(sys_tick / 100, str);
+            toStr(sys_tick / 100, str);
             p = (unsigned short *)VIDEO_START;
             p += 75;
-            while (str[j] != '\0')
+            j = 0;
+            while (j < strLen(str))
             {
-                *p = *str + VIDEO_MASK;
+                // p = (unsigned short *)(str[j] + VIDEO_MASK);
+                *p = str[j] + VIDEO_MASK;
                 j++;
             }
         }
@@ -36,7 +38,7 @@ void Clock()
  * Takes number and reference to str. str is populated with number
  */
 // http://athena.ecs.csus.edu/~changw/159/grades/C-Test-Code/strings/itoa.c
-void numberToString(int number, char *str)
+void toStr(int number, char *str)
 {
     int j = 0;
     char tmp;
