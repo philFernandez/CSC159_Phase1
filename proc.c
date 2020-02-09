@@ -6,7 +6,6 @@
 
 #include "spede.h"
 #include "kernel.h" // was using <kernel.h>
-
 void toStr(int, char *);
 int strLen(char *);
 
@@ -17,10 +16,11 @@ void Clock()
     unsigned short *p;
     while (1)
     {
-        sys_tick++;
+
         if (sys_tick % 100 == 0)
         {
             toStr(sys_tick / 100, str);
+            // printf("%d\n", sys_tick / 100);
             p = (unsigned short *)VIDEO_START;
             p += 75;
             j = 0;
@@ -28,6 +28,7 @@ void Clock()
             {
                 // p = (unsigned short *)(str[j] + VIDEO_MASK);
                 *p = str[j] + VIDEO_MASK;
+                // printf("%s\n", str);
                 j++;
             }
         }
@@ -54,7 +55,7 @@ void toStr(int number, char *str)
         j++;
     }
 
-    for (number = 0; number < j / 2; number++)
+    for (number = 0; number < strLen(str) / 2; number++)
     {
         tmp = str[number];
         str[number] = str[j - number - 1];
