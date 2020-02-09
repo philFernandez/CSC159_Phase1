@@ -8,29 +8,31 @@
 #include "kernel.h" // was using <kernel.h>
 void toStr(int, char *);
 int strLen(char *);
+uint16 *const video_base = (uint16 *)0xB8000;
+
+void output_message(char toDisplay[])
+{
+    uint8 *vp8 = (uint8 *)(video_base + 75);
+    uint8 *p = (uint8 *)toDisplay;
+
+    for (; *p != '\0'; p += 1, vp8 += 2)
+    {
+        *vp8 = *p;
+    }
+}
 
 void Clock()
 {
     int j;
+    int len;
     char str[] = "    "; // str for 4-digits, plus NUL
-    unsigned short *p;
     while (1)
     {
-
         if (sys_tick % 100 == 0)
         {
             toStr(sys_tick / 100, str);
-            // printf("%d\n", sys_tick / 100);
-            p = (unsigned short *)VIDEO_START;
-            p += 75;
-            j = 0;
-            while (j < strLen(str))
-            {
-                // p = (unsigned short *)(str[j] + VIDEO_MASK);
-                *p = str[j] + VIDEO_MASK;
-                // printf("%s\n", str);
-                j++;
-            }
+            printf("STR: %s\n", str);
+            output_message(str);
         }
     }
 }
@@ -41,10 +43,15 @@ void Clock()
 // http://athena.ecs.csus.edu/~changw/159/grades/C-Test-Code/strings/itoa.c
 void toStr(int number, char *str)
 {
-    int j = 0;
-    char tmp;
+    /**
+     * PROFESOR'S CODE
+    int len = strLen(str);
+    str[len - 1] = number % 10 + '0';
+    number /= 10;
+    */
 
-    str[0] = '0';
+    int len = strLen(str);
+    int j = len - 1;
 
     while (number)
     {
@@ -52,15 +59,15 @@ void toStr(int number, char *str)
             break;
         str[j] = (number % 10) + '0';
         number /= 10;
-        j++;
+        j--;
     }
 
-    for (number = 0; number < strLen(str) / 2; number++)
-    {
-        tmp = str[number];
-        str[number] = str[j - number - 1];
-        str[j - number - 1] = tmp;
-    }
+    // for (number = 0; number < strLen(str) / 2; number++)
+    //{
+    // tmp = str[number];
+    // str[number] = str[j - number - 1];
+    // str[j - number - 1] = tmp;
+    //}
 }
 
 /*

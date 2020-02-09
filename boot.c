@@ -32,8 +32,6 @@ void CreateProc(func_p_t p)
     pcb[cur_pid].state = READY;
     pcb[cur_pid].tf_p = (tf_t *)&stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
 
-    // use tf_p to set its efl cs eip
-    // Pg 97 has register info
     pcb[cur_pid].tf_p->efl = FLAGS;
     pcb[cur_pid].tf_p->cs = CS;
     pcb[cur_pid].tf_p->eip = (int)p;
@@ -66,12 +64,8 @@ void main(void)
     outportb(PIC_MASK_REG, PIC_MASK);
     asm("sti");
 
-    // func_p_t clockPtr = (void *)Clock;
-
     CreateProc((func_p_t)Clock);
     // call Loader to load the trapframe of the new process
     cur_pid = 0;
-    // pcb[cur_pid].run_tick = 0;
-    // pcb[cur_pid].total_tick = 0;
     Loader(pcb[cur_pid].tf_p);
 }
