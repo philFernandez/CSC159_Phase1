@@ -5,21 +5,13 @@
 // processes do not R/W kernel data or call kernel code, only via syscalls
 
 #include "spede.h"
-#include "kernel.h" // was using <kernel.h>
+#include "kernel.h"
 void toStr(int, char *);
 int strLen(char *);
+void output_message(char toDisplay[]);
+
+// Text video memory base address
 uint16 *const video_base = (uint16 *)0xB8000;
-
-void output_message(char toDisplay[])
-{
-    uint8 *vp8 = (uint8 *)(video_base + 75);
-    uint8 *p = (uint8 *)toDisplay;
-
-    for (; *p != '\0'; p += 1, vp8 += 2)
-    {
-        *vp8 = *p;
-    }
-}
 
 void Clock()
 {
@@ -31,24 +23,30 @@ void Clock()
         if (sys_tick % 100 == 0)
         {
             toStr(sys_tick / 100, str);
-            printf("STR: %s\n", str);
             output_message(str);
         }
     }
 }
 
 /*
+ * Modified version of function from lab manual p 54
+ */
+void output_message(char toDisplay[])
+{
+    uint8 *vp8 = (uint8 *)(video_base + 75);
+    uint8 *p = (uint8 *)toDisplay;
+
+    for (; *p != '\0'; p += 1, vp8 += 2)
+    {
+        *vp8 = *p;
+    }
+}
+
+/*
  * Takes number and reference to str. str is populated with number
  */
-// http://athena.ecs.csus.edu/~changw/159/grades/C-Test-Code/strings/itoa.c
 void toStr(int number, char *str)
 {
-    /**
-     * PROFESOR'S CODE
-    int len = strLen(str);
-    str[len - 1] = number % 10 + '0';
-    number /= 10;
-    */
 
     int len = strLen(str);
     int j = len - 1;
@@ -61,13 +59,6 @@ void toStr(int number, char *str)
         number /= 10;
         j--;
     }
-
-    // for (number = 0; number < strLen(str) / 2; number++)
-    //{
-    // tmp = str[number];
-    // str[number] = str[j - number - 1];
-    // str[j - number - 1] = tmp;
-    //}
 }
 
 /*

@@ -18,6 +18,8 @@ void TimerService(tf_t *tf_p)
         ch = cons_getchar();
         if (ch == 'g')
             breakpoint();
+        if (ch == 'x')
+            exit(0);
     }
 
     // notify PIC the timer is serviced
