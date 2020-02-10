@@ -8,11 +8,11 @@
 #include "misc.h"
 #include "proc.h"
 
-int cur_pid; // for currently selected PID
+int cur_pid; // For currently selected PID
 q_t unused_q;
 q_t ready_q;
 
-pcb_t pcb[PROC_SIZE]; // process control block
+pcb_t pcb[PROC_SIZE]; // Process control block
 char stack[PROC_SIZE][STACK_SIZE];
 
 unsigned sys_tick;
@@ -25,13 +25,13 @@ void CreateProc(func_p_t p)
     // Add PID to ready_q
     EnQ(cur_pid, &ready_q);
 
+    // Clear pcb and stack for new proc
     Bzero((char *)&pcb[cur_pid], sizeof(q_t));
-
     Bzero(&stack[cur_pid][0], STACK_SIZE);
 
+    // Set up pcb for new proc
     pcb[cur_pid].state = READY;
     pcb[cur_pid].tf_p = (tf_t *)&stack[cur_pid][STACK_SIZE - sizeof(tf_t)];
-
     pcb[cur_pid].tf_p->efl = FLAGS;
     pcb[cur_pid].tf_p->cs = CS;
     pcb[cur_pid].tf_p->eip = (int)p;
@@ -40,20 +40,20 @@ void CreateProc(func_p_t p)
 void main(void)
 {
     int i = 0;
-    // clear sys_tick
+    // Clear sys_tick
     sys_tick = 0;
     intr_table = (struct i386_gate *)INTR_TABLE;
-    // clear both unused_q and ready_q
+    // Clear both unused_q and ready_q
     Bzero((char *)&unused_q, sizeof(q_t));
     Bzero((char *)&ready_q, sizeof(q_t));
 
     unused_q.head = -1;
     unused_q.tail = -1;
-    // add unused PIDs to unused_q
 
     ready_q.head = -1;
     ready_q.tail = -1;
 
+    // Add unused PIDs to unused_q
     while (!QisFull(&unused_q))
     {
         EnQ(i, &unused_q);
@@ -64,8 +64,10 @@ void main(void)
     outportb(PIC_MASK_REG, PIC_MASK);
     asm("sti");
 
+    // Create Clock proc
     CreateProc((func_p_t)Clock);
-    // call Loader to load the trapframe of the new process
+
     cur_pid = 0;
+    // call Loader to load the trapframe of the new process
     Loader(pcb[cur_pid].tf_p);
 }

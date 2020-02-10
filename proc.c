@@ -15,8 +15,6 @@ uint16 *const video_base = (uint16 *)0xB8000;
 
 void Clock()
 {
-    int j;
-    int len;
     char str[] = "    "; // str for 4-digits, plus NUL
     while (1)
     {
@@ -42,8 +40,10 @@ void output_message(char toDisplay[])
     }
 }
 
-/*
- * Takes number and reference to str. str is populated with number
+/**
+ * Takes number and reference to str.
+ * str is populated with number.
+ * str is populated from back to front
  */
 void toStr(int number, char *str)
 {
@@ -61,7 +61,7 @@ void toStr(int number, char *str)
     }
 }
 
-/*
+/**
  * Return str length
  */
 int strLen(char *s)

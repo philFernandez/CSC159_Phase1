@@ -3,14 +3,24 @@
 
 #include "spede.h"
 #include "kernel.h"
-//#include <string.h>
 
-// Impliment Queue for unused_q and ready_q
+/**
+ * Implement circular queue data structure for unused_q and ready_q
+ */
+
+/**
+ * Q empty, return true
+ * else return false
+ */
 int QisEmpty(q_t *q)
 {
     return (q->head == -1) ? TRUE : FALSE;
 }
 
+/**
+ * Q full, return true
+ * else return false
+ */
 int QisFull(q_t *q)
 {
     if ((q->head == q->tail + 1) || (q->head == 0 && q->tail == Q_SIZE - 1))
@@ -21,6 +31,10 @@ int QisFull(q_t *q)
     return FALSE;
 }
 
+/**
+ * Remove and return element from head
+ * Re-adjust head/tail pointers
+ */
 int DeQ(q_t *q)
 {
     int pid;
@@ -50,6 +64,10 @@ int DeQ(q_t *q)
     }
 }
 
+/**
+ * Put new element in Q[tail]
+ * adjust head/tail pointers
+ */
 void EnQ(int pid, q_t *q)
 {
     if (QisFull(q))
@@ -67,6 +85,9 @@ void EnQ(int pid, q_t *q)
     }
 }
 
+/**
+ * Fill string with '\0'
+ */
 void Bzero(char *s, unsigned n)
 {
     int i;
