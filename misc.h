@@ -6,7 +6,6 @@
 
 #include "kernel.h"
 
-
 int QisEmpty(q_t*);
 
 int QisFull(q_t*);
