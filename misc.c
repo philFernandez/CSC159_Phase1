@@ -96,3 +96,23 @@ void Bzero(char *s, unsigned n)
         s[i] = '\0';
     }
 }
+
+void StrAdd(char ch, char *s)
+{
+    int i=0;
+    while(s[i] != '\0')         // Loop ends when NULL is reached in src
+        i++;
+    s[i] = ch;
+    s[i+1] = '\0';
+}
+
+void StrCpy(char *src, char *dst)
+{
+    int i=0;
+    while (s[i] != '\0')        // Loop ends when NULL is reached in src
+    {
+        dst[i] = s[i];
+        i++;
+    }
+    dst[i] = '\0';              // Properly delimiting dst
+}
