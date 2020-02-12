@@ -17,7 +17,7 @@
 #define VIDEO_START     0xb8000 // upper-left corner
 
 // system limit stuff
-#define TIME_SIZE  300  // max timer count, then rotate process
+#define TIME_SIZE  100  // max timer count, then rotate process
 #define PROC_SIZE  20   // max number of processes
 #define STACK_SIZE 4096 // process stack in bytes
 #define Q_SIZE     20   // capacity of a process queue
@@ -26,7 +26,15 @@
 #define TRUE  1
 #define FALSE 0
 #define NUL   0
-#define NA    -1
+#define NA   -1
+
+// For process I/O functionality
+#define GET_TIME    48
+#define WRITE       49
+#define READ        50
+#define STR_SIZE    100
+#define CR          '\r'
+#define LR          '\n'
 
 typedef void (*func_p_t)(void); // void-return function pointer type
 
@@ -34,7 +42,8 @@ typedef enum
 {
     UNUSED,
     READY,
-    RUN
+    RUN,
+    WAIT
 } state_t; // process states
 
 typedef struct
@@ -55,15 +64,28 @@ typedef struct
     int q[Q_SIZE];        // PID's are queued in que[] array
 } q_t;
 
+typedef struct
+{                           // keyboard type
+    int buffer[STR_SIZE];
+    q_t wait_q;
+} kb_t;
+
 // kernel data are all declared in boot.c during bootstrap
 extern int cur_pid;           // PID currently selected as running process
 extern unsigned sys_tick;     // counting for a system time
 extern q_t unused_q, ready_q; // unused PID's and ready-to-run PID's
 extern pcb_t pcb[PROC_SIZE];  // Process Control Blocks
 extern char stack[PROC_SIZE][STACK_SIZE]; // process runtime stacks
+extern kb_t kb;
 
+// Prototypes
 void Swapper(void);
 void TimerService(tf_t *);
+void GetTimeService(tf_t *);
+void WriteService(tf_t *);
+void ReadService(tf_t *);
+void WriteChar(char s);
+void KbService(char s);
 
 #endif
 
