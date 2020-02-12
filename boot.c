@@ -13,6 +13,9 @@ q_t unused_q;
 q_t ready_q;
 
 pcb_t pcb[PROC_SIZE]; // Process control block
+
+kb_t kb;
+
 char stack[PROC_SIZE][STACK_SIZE];
 
 unsigned sys_tick;
@@ -43,6 +46,7 @@ void main(void)
     // Clear sys_tick
     sys_tick = 0;
     intr_table = (struct i386_gate *)INTR_TABLE;
+
     // Clear both unused_q and ready_q
     Bzero((char *)&unused_q, sizeof(q_t));
     Bzero((char *)&ready_q, sizeof(q_t));
@@ -67,7 +71,18 @@ void main(void)
     // Create Clock proc
     CreateProc((func_p_t)Clock);
 
-    cur_pid = 0;
+    cur_pid = DeQ(&ready_q);
+
     // call Loader to load the trapframe of the new process
     Loader(pcb[cur_pid].tf_p);
+
+    Bzero((char *)&unused_q, sizeof(kb));
+    fill_gate(&intr_table[GET_TIME], (int)GetTimeEntry, get_cs(), ACC_INTR_GATE, 0);
+    fill_gate(&intr_table[WRITE], (int)WriteEntry, get_cs(), ACC_INTR_GATE, 0);
+    fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
+
+    CreateProc((func_p_t)Init);
+    cur_pid = DeQ(&ready_q);
+    Loader(pcb[cur_pid].tf_p);
+
 }
