@@ -9,6 +9,9 @@
 #define FLAGS           0x212   // CPU flags for trapframe
 #define INTR_TABLE      0x3914c // location of the interrupt table
 #define TIMER           32      // timer event code
+#define GET_TIME        48
+#define WRITE           49
+#define READ            50
 #define PIC_MASK_REG    0x21    // I/O # of PIC mask register
 #define PIC_MASK        ~0x01   // mask value for PIC mask
 #define PIC_CONTROL_REG 0x20    // I/O # of PIC control register
@@ -29,9 +32,7 @@
 #define NA   -1
 
 // For process I/O functionality
-#define GET_TIME    48
-#define WRITE       49
-#define READ        50
+
 #define STR_SIZE    100
 #define CR          '\r'
 #define LR          '\n'
