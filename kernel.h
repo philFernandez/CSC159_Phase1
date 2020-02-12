@@ -84,8 +84,8 @@ void TimerService(tf_t *);
 void GetTimeService(tf_t *);
 void WriteService(tf_t *);
 void ReadService(tf_t *);
-void WriteChar(char s);
-void KbService(char s);
+void WriteChar(char);
+void KbService(char);
 
 #endif
 

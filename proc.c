@@ -6,6 +6,8 @@
 
 #include "spede.h"
 #include "kernel.h"
+#include "syscall.h"
+
 void toStr(int, char *);
 int strLen(char *);
 void output_message(char toDisplay[]);
@@ -79,4 +81,16 @@ int strLen(char *s)
     }
 
     return length;
+}
+
+void Init()
+{
+    int cur_time;
+    char *time;
+    while(1)
+    {
+        cur_time = get_time_call();
+        toStr(cur_time, time);
+        write_call(time);
+    }
 }
