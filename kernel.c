@@ -54,15 +54,21 @@ void Swapper(void)
 
 void GetTimeService(tf_t *tf_p)
 {
-    pcb[cur_pid].tf_p->eax = ;
+    // Ask professor if this is right??
+    pcb[cur_pid].tf_p->eax = pcb[cur_pid].tf_p->eip;
     Loader(pcb[cur_pid].tf_p);
 }
 
 void WriteService(tf_t *tf_p)
 {
-    pcb[cur_pid].tf_p->eax =
+    // eax has the address to the string we need to print
+    char *charsToWrite = (char *)pcb[cur_pid].tf_p->eax;
 
-        for (int i =) Loader(pcb[cur_pid].tf_p);
+    while (*charsToWrite != '\0')
+    {
+        WriteChar(*charsToWrite);
+        charsToWrite++;
+    }
 }
 
 void WriteChar(char c) // ask about
