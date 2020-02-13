@@ -69,6 +69,9 @@ void WriteService(tf_t *tf_p)
         WriteChar(*charsToWrite);
         charsToWrite++;
     }
+
+    // Call loader to resume process that was happening before WriteChar?
+    Loader(pcb[cur_pid].tf_p);
 }
 
 void WriteChar(char c) // ask about
