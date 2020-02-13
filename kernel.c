@@ -22,6 +22,7 @@ void TimerService(tf_t *tf_p)
             KbService(ch);
     }
 
+
     // notify PIC the timer is serviced
     outportb(PIC_CONTROL_REG, TIMER_ACK);
 
@@ -52,7 +53,7 @@ void Swapper(void)
     pcb[cur_pid].state = RUN;
 }
 
-void GetTimeService(tf_t *tf_p)
+void GetTimerService(tf_t *tf_p)
 {
     pcb[cur_pid].tf_p->eax = ;
     Loader(pcb[cur_pid].tf_p);
@@ -62,18 +63,21 @@ void WriteService(tf_t *tf_p)
 {
     pcb[cur_pid].tf_p->eax =
 
-        for (int i =) Loader(pcb[cur_pid].tf_p);
+    for (int i=)
+    Loader(pcb[cur_pid].tf_p);
 }
 
 void WriteChar(char c) // ask about
 {
-    static unsigned short *cursor = (typecast)VIDEO_START;
+    static unsigned short *cursor = (typecast) VIDEO_START;
 
     if (cursor)
 
-        if (c != CR || c != LF)
-        {
-        }
+    if (c != CR || c != LF)
+    {
+
+    }
+
 }
 
 void ReadService(tf_t *tf_p)
