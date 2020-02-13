@@ -29,13 +29,13 @@
 #define TRUE  1
 #define FALSE 0
 #define NUL   0
-#define NA   -1
+#define NA    -1
 
 // For process I/O functionality
 
-#define STR_SIZE    100
-#define CR          '\r'
-#define LR          '\n'
+#define STR_SIZE 100
+#define CR       '\r'
+#define LF       '\n'
 
 typedef void (*func_p_t)(void); // void-return function pointer type
 
@@ -66,7 +66,7 @@ typedef struct
 } q_t;
 
 typedef struct
-{                           // keyboard type
+{ // keyboard type
     int buffer[STR_SIZE];
     q_t wait_q;
 } kb_t;
