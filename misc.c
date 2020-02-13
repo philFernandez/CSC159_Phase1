@@ -97,22 +97,33 @@ void Bzero(char *s, unsigned n)
     }
 }
 
+// Professor Wrote in lecture after Phase1 turned in
+void Bzero2(char *start, int size)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        *start = '\0';
+        start++;
+    }
+}
+
 void StrAdd(char ch, char *s)
 {
-    int i=0;
-    while(s[i] != '\0')         // Loop ends when NULL is reached in src
+    int i = 0;
+    while (s[i] != '\0') // Loop ends when NULL is reached in src
         i++;
     s[i] = ch;
-    s[i+1] = '\0';
+    s[i + 1] = '\0';
 }
 
 void StrCpy(char *src, char *dst)
 {
-    int i=0;
-    while (s[i] != '\0')        // Loop ends when NULL is reached in src
+    int i = 0;
+    while (s[i] != '\0') // Loop ends when NULL is reached in src
     {
         dst[i] = s[i];
         i++;
     }
-    dst[i] = '\0';              // Properly delimiting dst
+    dst[i] = '\0'; // Properly delimiting dst
 }
