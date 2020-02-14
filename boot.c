@@ -29,7 +29,7 @@ void CreateProc(func_p_t p)
     EnQ(cur_pid, &ready_q);
 
     // Clear pcb and stack for new proc
-    Bzero((char *)&pcb[cur_pid], sizeof(q_t));
+    Bzero((char *)&pcb[cur_pid], sizeof(&pcb[0]));
     Bzero(&stack[cur_pid][0], STACK_SIZE);
 
     // Set up pcb for new proc
@@ -69,7 +69,7 @@ void main(void)
     asm("sti");
 
     // Create Clock proc
-    CreateProc((func_p_t)Clock);
+    CreateProc(Clock);
 
     cur_pid = DeQ(&ready_q);
 
@@ -81,7 +81,7 @@ void main(void)
     fill_gate(&intr_table[WRITE], (int)WriteEntry, get_cs(), ACC_INTR_GATE, 0);
     fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
 
-    CreateProc((func_p_t)Init);
+    CreateProc(Init);
     cur_pid = DeQ(&ready_q);
     Loader(pcb[cur_pid].tf_p);
 

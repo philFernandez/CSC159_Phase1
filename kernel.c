@@ -32,7 +32,7 @@ void TimerService(tf_t *tf_p)
     if (pcb[cur_pid].run_tick == TIME_SIZE)
     {
         EnQ(cur_pid, &ready_q);
-        pcb[cur_pid].state = UNUSED; // should be READY??
+        pcb[cur_pid].state = READY;
         cur_pid = NA;
         Swapper();
     }
@@ -76,14 +76,27 @@ void WriteService(tf_t *tf_p)
 
 void WriteChar(char c) // ask about
 {
-    static unsigned short *cursor = (typecast)VIDEO_START;
+    static unsigned short *cursor = (unsigned short*) VIDEO_START;
 
-    if (cursor)
+    if (cursor % 75 == 0)           // cursor is at beginning of row
     {
-        if (c != CR || c != LF)
+        while(1)
         {
+            for(i = 0; i < 75; i++)
+                *p = " " + VIDEO_MASK;
         }
     }
+
+    if (c != CR || c != LF)         // c is a normal character
+    {
+        cursor = c + VIDEO_MASK;
+        cursor++;
+    }
+    if (cursor > 75*25)
+    {
+        cursor = (unsigned short*) VIDEO_START;
+    }
+
 }
 
 void ReadService(tf_t *tf_p)

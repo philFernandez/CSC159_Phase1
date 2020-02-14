@@ -12,28 +12,34 @@ void toStr(int, char *);
 int strLen(char *);
 void output_message(char toDisplay[]);
 
-// Text video memory base address
 uint16 *const video_base = (uint16 *)0xB8000;
 
 void Clock()
 {
-    char str[] = "    "; // str for 4-digits, plus NUL
+    int i;
+    char str[] = "    ";
+    unsigned short *p;
+
     while (1)
     {
         if (sys_tick % 100 == 0)
         {
             toStr(sys_tick / 100, str);
-            output_message(str);
+            p = VIDEO_START;
+            p += 75;
+
+            for(i = 0; i < strLen(&str[0]); i++)
+                *p = str[i] + VIDEO_MASK;
         }
     }
 }
 
 /*
  * Modified version of function from lab manual p 54
- */
+
 void output_message(char toDisplay[])
 {
-    uint8 *vp8 = (uint8 *)(video_base + 75);
+    uint16 *vp8 = (uint8 *)(video_base + 75);
     uint8 *p = (uint8 *)toDisplay;
 
     for (; *p != '\0'; p += 1, vp8 += 2)
@@ -41,39 +47,27 @@ void output_message(char toDisplay[])
         *vp8 = *p;
     }
 }
+*/
 
-/**
- * Takes number and reference to str.
- * str is populated with number.
- * str is populated from back to front
- */
 void toStr(int number, char *str)
 {
 
     int len = strLen(str);
     int j = len - 1;
 
-    while (number)
+    while (number && j>= 0)
     {
-        if (str[j] == '\0')
-            break;
         str[j] = (number % 10) + '0';
         number /= 10;
         j--;
     }
 }
 
-/**
- * Return str length
- */
 int strLen(char *s)
 {
     int length = 0;
     char c = *(s + length);
 
-    // '\0' marks end of char array (string)
-    // count up all chars before reaching '\0'
-    // to get string length
     while (c != '\0')
     {
         length++;

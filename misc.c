@@ -4,23 +4,14 @@
 #include "spede.h"
 #include "kernel.h"
 
-/**
- * Implement circular queue data structure for unused_q and ready_q
- */
-
-/**
- * Q empty, return true
- * else return false
- */
+// Q empty, return true
 int QisEmpty(q_t *q)
 {
     return (q->head == -1) ? TRUE : FALSE;
 }
 
-/**
- * Q full, return true
- * else return false
- */
+// Q full, return true
+
 int QisFull(q_t *q)
 {
     if ((q->head == q->tail + 1) || (q->head == 0 && q->tail == Q_SIZE - 1))
@@ -31,10 +22,6 @@ int QisFull(q_t *q)
     return FALSE;
 }
 
-/**
- * Remove and return element from head
- * Re-adjust head/tail pointers
- */
 int DeQ(q_t *q)
 {
     int pid;
@@ -94,17 +81,6 @@ void Bzero(char *s, unsigned n)
     for (i = 0; i < n; i++)
     {
         s[i] = '\0';
-    }
-}
-
-// Professor Wrote in lecture after Phase1 turned in
-void Bzero2(char *start, int size)
-{
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        *start = '\0';
-        start++;
     }
 }
 

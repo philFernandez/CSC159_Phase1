@@ -24,20 +24,16 @@
 #define PROC_SIZE  20   // max number of processes
 #define STACK_SIZE 4096 // process stack in bytes
 #define Q_SIZE     20   // capacity of a process queue
-
 // prog logic stuff
 #define TRUE  1
 #define FALSE 0
 #define NUL   0
 #define NA    -1
-
-// For process I/O functionality
-
 #define STR_SIZE 100
 #define CR       '\r'
 #define LF       '\n'
 
-typedef void (*func_p_t)(void); // void-return function pointer type
+typedef void (*func_p_t)(void);
 
 typedef enum
 {
@@ -45,41 +41,39 @@ typedef enum
     READY,
     RUN,
     WAIT
-} state_t; // process states
+} state_t;
 
 typedef struct
 {
     unsigned edi, esi, ebp, esp, ebx, edx, ecx, eax, eip, cs, efl;
-} tf_t; // 'trapframe' type
+} tf_t;
 
 typedef struct
 {
-    state_t state;                 // state of process
-    unsigned run_tick, total_tick; // runtime of process and lifespan
-    tf_t *tf_p;                    // points to proc's trapframe
+    state_t state;
+    unsigned run_tick, total_tick;
+    tf_t *tf_p;
 } pcb_t;
 
 typedef struct
-{                         // circular queue
-    int head, tail, size; // head dequeue, tail enqueue, current size
-    int q[Q_SIZE];        // PID's are queued in que[] array
+{
+    int head, tail, size;
+    int q[Q_SIZE];
 } q_t;
 
 typedef struct
-{ // keyboard type
+{
     int buffer[STR_SIZE];
     q_t wait_q;
 } kb_t;
 
-// kernel data are all declared in boot.c during bootstrap
-extern int cur_pid;           // PID currently selected as running process
-extern unsigned sys_tick;     // counting for a system time
-extern q_t unused_q, ready_q; // unused PID's and ready-to-run PID's
-extern pcb_t pcb[PROC_SIZE];  // Process Control Blocks
-extern char stack[PROC_SIZE][STACK_SIZE]; // process runtime stacks
+extern int cur_pid;
+extern unsigned sys_tick;
+extern q_t unused_q, ready_q;
+extern pcb_t pcb[PROC_SIZE];
+extern char stack[PROC_SIZE][STACK_SIZE];
 extern kb_t kb;
 
-// Prototypes
 void Swapper(void);
 void TimerService(tf_t *);
 void GetTimeService(tf_t *);
