@@ -10,7 +10,6 @@
 void TimerService(tf_t *tf_p)
 {
     char ch;
-
     pcb[cur_pid].tf_p = tf_p;
 
     if (cons_kbhit())
@@ -39,64 +38,50 @@ void TimerService(tf_t *tf_p)
     Loader(pcb[cur_pid].tf_p);
 }
 
-void Swapper(void)
-{
-    if (QisEmpty(&ready_q))
-    {
-        cons_printf("Kernel: panic, no more process ready to run!\n");
-        breakpoint();
-    }
-
-    cur_pid = DeQ(&ready_q);
-    pcb[cur_pid].run_tick = 0;
-    pcb[cur_pid].state = RUN;
-}
-
 void GetTimeService(tf_t *tf_p)
 {
     // Ask professor if this is right??
-    pcb[cur_pid].tf_p->eax = pcb[cur_pid].tf_p->eip;
-    Loader(pcb[cur_pid].tf_p);
+    tf_p->eax = sys_tick;
+    Loader(tf_p);
 }
 
 void WriteService(tf_t *tf_p)
 {
     // eax has the address to the string we need to print
-    char *charsToWrite = (char *)pcb[cur_pid].tf_p->eax;
+    char *charsToWrite = (char *)tf_p->eax;
 
-    while (*charsToWrite != '\0')
+    while (*charsToWrite != NUL)
     {
         WriteChar(*charsToWrite);
         charsToWrite++;
     }
 
     // Call loader to resume process that was happening before WriteChar?
-    Loader(pcb[cur_pid].tf_p);
+    Loader(tf_p);
 }
 
 void WriteChar(char c) // ask about
 {
-    static unsigned short *cursor = (unsigned short*) VIDEO_START;
+    static unsigned short *cursor = (unsigned short *)VIDEO_START;
 
-    if (cursor % 75 == 0)           // cursor is at beginning of row
+    if (cursor % 80 == 0) // cursor is at beginning of row
     {
-        while(1)
+        while (TRUE)
         {
-            for(i = 0; i < 75; i++)
+            for (i = 0; i < 80; i++)
                 *p = " " + VIDEO_MASK;
         }
     }
 
-    if (c != CR || c != LF)         // c is a normal character
+    if (c != CR || c != LF) // c is a normal character
     {
         cursor = c + VIDEO_MASK;
         cursor++;
     }
-    if (cursor > 75*25)
+    if (cursor > 75 * 25)
     {
-        cursor = (unsigned short*) VIDEO_START;
+        cursor = (unsigned short *)VIDEO_START;
     }
-
 }
 
 void ReadService(tf_t *tf_p)
@@ -127,4 +112,17 @@ void KbService(char c)
         pcb[cur_pid].state = READY;
         Bzero(kb.buffer, sizeof(kb.buffer));
     }
+}
+
+void Swapper(void)
+{
+    if (QisEmpty(&ready_q))
+    {
+        cons_printf("Kernel: panic, no more process ready to run!\n");
+        breakpoint();
+    }
+
+    cur_pid = DeQ(&ready_q);
+    pcb[cur_pid].run_tick = 0;
+    pcb[cur_pid].state = RUN;
 }

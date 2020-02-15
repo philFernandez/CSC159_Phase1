@@ -28,23 +28,13 @@ void Clock()
             p = VIDEO_START;
             p += 75;
 
-            for (i = 0; i < strLen(&str[0]); i++)
+            for (i = 0; str[i] != NUL; i++)
+            {
                 *p = str[i] + VIDEO_MASK;
+                // shift p over to make room for more digits
+                p++;
+            }
         }
-    }
-}
-
-/*
- * Modified version of function from lab manual p 54
- */
-void output_message(char toDisplay[])
-{
-    uint16 *vp8 = (uint8 *)(video_base + 75);
-    uint8 *p = (uint8 *)toDisplay;
-
-    for (; *p != '\0'; p += 1, vp8 += 2)
-    {
-        *vp8 = *p;
     }
 }
 
