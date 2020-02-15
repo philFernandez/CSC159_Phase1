@@ -4,71 +4,47 @@
 #include "spede.h"
 #include "kernel.h"
 
-// Q empty, return true
-int QisEmpty(q_t *q)
+// If q->size is zero returns true
+int QisEmpty(q_t *ptr)
 {
-    return (q->head == -1) ? TRUE : FALSE;
+    return !ptr->size;
 }
 
-// Q full, return true
-
-int QisFull(q_t *q)
+// if q->size is equal to max size returns true
+int QisFull(q_t *ptr)
 {
-    if ((q->head == q->tail + 1) || (q->head == 0 && q->tail == Q_SIZE - 1))
-    {
-        return TRUE;
-    }
-
-    return FALSE;
+    return ptr->size == Q_SIZE;
 }
 
-int DeQ(q_t *q)
+int DeQ(q_t *ptr)
 {
-    int pid;
-    if (QisEmpty(q))
-    {
-        return NA;
-    }
-    else
-    {
-        // Get the number pointed to by head
-        pid = q->q[q->head];
+    int item;
+    if (QisEmpty(ptr))
+        return NA; // -1
 
-        // Adjust head pointer
-        if (q->head == q->tail)
-        { // If this is the last number in q, reset the q
-            q->head = -1;
-            q->tail = -1;
-        }
-        else
-        {
-            // Adjust head pointer in circular fashion
-            q->head = (q->head + 1) % Q_SIZE;
-        }
-        // Decrement q->size
-        q->size -= 1;
-        return pid;
-    }
+    // Get element from front of queue
+    item = ptr->q[ptr->head];
+    // Adjust head pointer to point at new item in front
+    ptr->head = (ptr->head + 1) % Q_SIZE;
+    ptr->size--;
+
+    return item;
 }
 
-/**
- * Put new element in Q[tail]
- * adjust head/tail pointers
- */
-void EnQ(int pid, q_t *q)
+void EnQ(int item, q_t *ptr)
 {
-    if (QisFull(q))
+    if (QisFull(ptr))
     {
-        cons_printf("Panic: queue is full, cannot EnQ!\n");
+        cons_printf("Panic queue is full, cannot EnQ!\n");
         breakpoint();
     }
     else
     {
-        if (q->head == -1)
-            q->head = 0;
-        q->tail = (q->tail + 1) % Q_SIZE;
-        q->q[q->tail] = pid;
-        q->size += 1;
+        // Adjust tail pointer to point to new item
+        ptr->tail = (ptr->tail + 1) % Q_SIZE;
+        // Insert new item in queue
+        ptr->q[ptr->tail] = item;
+        ptr->size++;
     }
 }
 
