@@ -11,10 +11,9 @@
 int cur_pid; // For currently selected PID
 q_t unused_q;
 q_t ready_q;
+kb_t kb;
 
 pcb_t pcb[PROC_SIZE]; // Process control block
-
-kb_t kb;
 
 char stack[PROC_SIZE][STACK_SIZE];
 
@@ -50,12 +49,15 @@ void main(void)
     // Clear both unused_q and ready_q
     Bzero((char *)&unused_q, sizeof(q_t));
     Bzero((char *)&ready_q, sizeof(q_t));
+    Bzero((char *)&kb, sizeof(kb_t));
 
-    unused_q.head = -1;
+    unused_q.head = 0;
     unused_q.tail = -1;
+    unused_q.size = 0;
 
-    ready_q.head = -1;
+    ready_q.head = 0;
     ready_q.tail = -1;
+    ready_q.size = 0;
 
     // Add unused PIDs to unused_q
     while (!QisFull(&unused_q))
@@ -71,18 +73,16 @@ void main(void)
     // Create Clock proc
     CreateProc(Clock);
 
-    cur_pid = DeQ(&ready_q);
+    /*cur_pid = DeQ(&ready_q);*/
+    /*// call Loader to load the trapframe of the new process*/
+    /*Loader(pcb[cur_pid].tf_p);*/
 
-    // call Loader to load the trapframe of the new process
-    Loader(pcb[cur_pid].tf_p);
-
-    Bzero((char *)&unused_q, sizeof(kb));
-    fill_gate(&intr_table[GET_TIME], (int)GetTimeEntry, get_cs(), ACC_INTR_GATE, 0);
+    fill_gate(&intr_table[GET_TIME], (int)GetTimeEntry, get_cs(), ACC_INTR_GATE,
+              0);
     fill_gate(&intr_table[WRITE], (int)WriteEntry, get_cs(), ACC_INTR_GATE, 0);
     fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
 
     CreateProc(Init);
     cur_pid = DeQ(&ready_q);
     Loader(pcb[cur_pid].tf_p);
-
 }

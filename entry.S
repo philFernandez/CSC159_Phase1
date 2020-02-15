@@ -32,7 +32,7 @@ ENTRY(GetTimeEntry)
    leal kernel_stack+KERNEL_STACK_SIZE, %esp  // to kernel stack
    pushl %ecx               // push (proc trapframe addr) there
    cld                      // clear direction flag bit
-   call CNAME(TimerService) // call C function code
+   call CNAME(GetTimeService) // call C function code
 
 ENTRY(WriteEntry)
    pushal                   // push eax ecx edx ebx esp ebp esi edi
@@ -40,7 +40,7 @@ ENTRY(WriteEntry)
    leal kernel_stack+KERNEL_STACK_SIZE, %esp  // to kernel stack
    pushl %ecx               // push (proc trapframe addr) there
    cld                      // clear direction flag bit
-   call CNAME(WriteEntry)   // call C function code
+   call CNAME(WriteService)   // call C function code
 
 ENTRY(ReadEntry)
    pushal                   // push eax ecx edx ebx esp ebp esi edi
@@ -48,5 +48,5 @@ ENTRY(ReadEntry)
    leal kernel_stack+KERNEL_STACK_SIZE, %esp  // to kernel stack
    pushl %ecx               // push (proc trapframe addr) there
    cld                      // clear direction flag bit
-   call CNAME(ReadEntry)    // call C function code
+   call CNAME(ReadService)    // call C function code
 

@@ -25,10 +25,10 @@
 #define STACK_SIZE 4096 // process stack in bytes
 #define Q_SIZE     20   // capacity of a process queue
 // prog logic stuff
-#define TRUE  1
-#define FALSE 0
-#define NUL   0
-#define NA    -1
+#define TRUE     1
+#define FALSE    0
+#define NUL      0
+#define NA       -1
 #define STR_SIZE 100
 #define CR       '\r'
 #define LF       '\n'
