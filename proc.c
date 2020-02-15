@@ -28,7 +28,7 @@ void Clock()
             p = VIDEO_START;
             p += 75;
 
-            for(i = 0; i < strLen(&str[0]); i++)
+            for (i = 0; i < strLen(&str[0]); i++)
                 *p = str[i] + VIDEO_MASK;
         }
     }
@@ -36,7 +36,7 @@ void Clock()
 
 /*
  * Modified version of function from lab manual p 54
-
+ */
 void output_message(char toDisplay[])
 {
     uint16 *vp8 = (uint8 *)(video_base + 75);
@@ -47,7 +47,6 @@ void output_message(char toDisplay[])
         *vp8 = *p;
     }
 }
-*/
 
 void toStr(int number, char *str)
 {
@@ -55,7 +54,7 @@ void toStr(int number, char *str)
     int len = strLen(str);
     int j = len - 1;
 
-    while (number && j>= 0)
+    while (number && j >= 0)
     {
         str[j] = (number % 10) + '0';
         number /= 10;
@@ -81,7 +80,7 @@ void Init()
 {
     int cur_time;
     char *time;
-    while(1)
+    while (1)
     {
         cur_time = get_time_call();
         toStr(cur_time, time);
