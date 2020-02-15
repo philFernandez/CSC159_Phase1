@@ -12,8 +12,6 @@ void toStr(int, char *);
 int strLen(char *);
 void output_message(char toDisplay[]);
 
-uint16 *const video_base = (uint16 *)0xB8000;
-
 void Clock()
 {
     int i;
