@@ -73,7 +73,10 @@ void Init()
     while (1)
     {
         cur_time = get_time_call();
+        if (cur_time < 1)
+            cur_time = 1;
         toStr(cur_time, time_str);
+        printf("time_str : %s\n", time_str);
         write_call("The time is ");
         write_call(time_str); // pass "The time is "
         write_call(".\n");

@@ -69,29 +69,18 @@ void main(void)
     }
 
     fill_gate(&intr_table[TIMER], (int)TimerEntry, get_cs(), ACC_INTR_GATE, 0);
-    outportb(PIC_MASK_REG, PIC_MASK);
-    asm("sti");
-
-    // Create Clock proc
 
     fill_gate(&intr_table[GET_TIME], (int)GetTimeEntry, get_cs(), ACC_INTR_GATE,
               0);
-    outportb(PIC_MASK_REG, PIC_MASK);
-    asm("sti");
 
     fill_gate(&intr_table[WRITE], (int)WriteEntry, get_cs(), ACC_INTR_GATE, 0);
-    outportb(PIC_MASK_REG, PIC_MASK);
-    asm("sti");
 
     fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
+
     outportb(PIC_MASK_REG, PIC_MASK);
     asm("sti");
 
     CreateProc(Clock);
-
-    /*cur_pid = DeQ(&ready_q);*/
-    /*// call Loader to load the trapframe of the new process*/
-    /*Loader(pcb[cur_pid].tf_p);*/
 
     CreateProc(Init);
 

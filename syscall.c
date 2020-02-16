@@ -1,5 +1,6 @@
 // syscall.c
 // OS service calls
+
 // clang-format off
 
 // returns current system time in seconds
@@ -36,5 +37,4 @@ void read_call(char *str) {
         : "eax"
     );
 
-    return str;
 }
