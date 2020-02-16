@@ -75,24 +75,12 @@ void Init()
         cur_time = get_time_call();
         toStr(cur_time, time_str);
         write_call("The time is ");
+        write_call(time_str); // pass "The time is "
+        write_call(".\n");
+        write_call("What do you say to a cup of coffee? ");
+        read_call(answer_str);
+        write_call("The answer is ");
+        write_call(answer_str);
+        write_call(".\n");
     }
 }
-/*void Init()*/
-/*{*/
-/*int cur_time;*/
-/*char time_str[] = "    ";*/
-/*char answer_str[ANS_STR_SZ];*/
-/*while (1)*/
-/*{*/
-/*cur_time = get_time_call();*/
-/*toStr(cur_time, time_str);*/
-/*write_call("The time is ");*/
-/*write_call(time_str); // pass "The time is "*/
-/*write_call(".\n");*/
-/*write_call("What do you say to a cup of coffee? ");*/
-/*read_call(answer_str);*/
-/*write_call("The answer is ");*/
-/*write_call(answer_str);*/
-/*write_call(".\n");*/
-/*}*/
-/*}*/

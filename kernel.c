@@ -81,14 +81,14 @@ void WriteChar(char ch) // ask about
         p = cursor;
         for (i = 0; i < 80; i++)
         {
-            p = (unsigned short *)(VIDEO_MASK + ' ');
+            *p = (unsigned short *)(VIDEO_MASK + ' ');
             p++;
         }
     }
 
     if (ch != CR && ch != LF)
     {
-        cursor = (unsigned short *)(VIDEO_MASK + ch);
+        *cursor = (unsigned short *)(VIDEO_MASK + ch);
         cursor++;
         columnCount++;
     }
