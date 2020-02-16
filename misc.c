@@ -63,19 +63,20 @@ void Bzero(char *s, unsigned n)
 void StrAdd(char ch, char *s)
 {
     int i = 0;
-    while (s[i] != '\0') // Loop ends when NULL is reached in src
+    while (s[i] != NUL) // Loop ends when NULL is reached in src
         i++;
     s[i] = ch;
-    s[i + 1] = '\0';
+    s[i + 1] = NUL;
 }
 
 void StrCpy(char *src, char *dst)
 {
     int i = 0;
-    while (s[i] != '\0') // Loop ends when NULL is reached in src
+    while (src[i] != '\0') // Loop ends when NULL is reached in src
     {
-        dst[i] = s[i];
+        dst[i] = src[i];
         i++;
     }
     dst[i] = '\0'; // Properly delimiting dst
 }
+
