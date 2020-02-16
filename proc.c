@@ -11,7 +11,6 @@
 
 void toStr(int, char *);
 int strLen(char *);
-void output_message(char toDisplay[]);
 
 void Clock()
 {
@@ -23,7 +22,8 @@ void Clock()
     {
         if (sys_tick % TIME_SIZE == NUL)
         {
-            toStr(sys_tick / 100, str);
+            cur_second = sys_tick / 100;
+            toStr(cur_second, str);
             p = VIDEO_START;
             p += 75;
 

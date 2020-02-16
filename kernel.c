@@ -40,8 +40,7 @@ void TimerService(tf_t *tf_p)
 
 void GetTimeService(tf_t *tf_p)
 {
-    // Ask professor if this is right??
-    tf_p->eax = sys_tick;
+    tf_p->eax = cur_second;
     Loader(tf_p);
 }
 
