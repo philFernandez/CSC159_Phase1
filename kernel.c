@@ -17,7 +17,7 @@ void TimerService(tf_t *tf_p)
         ch = cons_getchar();
         if (ch == 'g')
             breakpoint();
-        if (!QisEmpty(&wait_q))
+        if (!QisEmpty(&kb.wait_q))
             KbService(ch);
     }
 
@@ -60,17 +60,17 @@ void WriteService(tf_t *tf_p)
     Loader(tf_p);
 }
 
-void WriteChar(char c) // ask about
+void WriteChar(char ch) // ask about
 {
     static unsigned short *cursor = (unsigned short *)VIDEO_START;
     // columnCount keeps track of columns so we know when starting new row
     static int columnCount = 0;
-    unsigned short p;
+    unsigned short *p;
     int i;
 
     // Have to double MAX_COLS*MAX_ROWS because cursor pointer
     // is incremented by two for every new char (2 byte offset)
-    if ((int)cursor >= 2 * MAX_COLS * MAX_ROWS)
+    if ((int)cursor >= VIDEO_START + 2 * MAX_COLS * MAX_ROWS)
     {
         // Start cursor back at beginning when lower right is reached
         cursor = (unsigned short *)VIDEO_START;
@@ -82,14 +82,14 @@ void WriteChar(char c) // ask about
         p = cursor;
         for (i = 0; i < 80; i++)
         {
-            *p = VIDEO_MASK + ' ';
+            p = (unsigned short *)(VIDEO_MASK + ' ');
             p++;
         }
     }
 
     if (ch != CR && ch != LF)
     {
-        cursor = VIDEO_MASK + c;
+        cursor = (unsigned short *)(VIDEO_MASK + ch);
         cursor++;
         columnCount++;
     }
@@ -99,7 +99,7 @@ void ReadService(tf_t *tf_p)
 {
     pcb[cur_pid].tf_p = tf_p;
 
-    EnQ(cur_pid, &kb->wait_q);
+    EnQ(cur_pid, &kb.wait_q);
     pcb[cur_pid].state = WAIT;
     cur_pid = NA;
 
@@ -121,7 +121,7 @@ void KbService(char c)
         StrCpy(kb.buffer, pcb[cur_pid].tf_p->eax);
 
         pcb[cur_pid].state = READY;
-        EnQ(cur_pid, ready_q);
+        EnQ(cur_pid, &ready_q);
         Bzero(kb.buffer, sizeof(kb.buffer));
     }
 }

@@ -25,7 +25,7 @@
 #define STACK_SIZE 4096 // process stack in bytes
 #define Q_SIZE     20   // capacity of a process queue
 #define MAX_COLS   80
-#define MAX_ROWS
+#define MAX_ROWS   25
 // prog logic stuff
 #define TRUE     1
 #define FALSE    0
