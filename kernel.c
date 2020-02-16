@@ -87,9 +87,12 @@ void WriteChar(char c) // ask about
         }
     }
 
-    cursor = VIDEO_MASK + c;
-    cursor++;
-    columnCount++;
+    if (ch != CR && ch != LF)
+    {
+        cursor = VIDEO_MASK + c;
+        cursor++;
+        columnCount++;
+    }
 }
 
 void ReadService(tf_t *tf_p)
