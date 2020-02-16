@@ -63,25 +63,33 @@ void WriteService(tf_t *tf_p)
 void WriteChar(char c) // ask about
 {
     static unsigned short *cursor = (unsigned short *)VIDEO_START;
+    // columnCount keeps track of columns so we know when starting new row
+    static int columnCount = 0;
+    unsigned short p;
+    int i;
 
-    if (cursor % 80 == 0) // cursor is at beginning of row
+    // Have to double MAX_COLS*MAX_ROWS because cursor pointer
+    // is incremented by two for every new char (2 byte offset)
+    if ((int)cursor >= 2 * MAX_COLS * MAX_ROWS)
     {
-        while (TRUE)
+        // Start cursor back at beginning when lower right is reached
+        cursor = (unsigned short *)VIDEO_START;
+    }
+
+    if (columnCount % 80 == 0)
+    {
+        // Use p to clear new rows so we can save place of cursor
+        p = cursor;
+        for (i = 0; i < 80; i++)
         {
-            for (i = 0; i < 80; i++)
-                *p = " " + VIDEO_MASK;
+            *p = VIDEO_MASK + ' ';
+            p++;
         }
     }
 
-    if (c != CR || c != LF) // c is a normal character
-    {
-        cursor = c + VIDEO_MASK;
-        cursor++;
-    }
-    if (cursor > 75 * 25)
-    {
-        cursor = (unsigned short *)VIDEO_START;
-    }
+    cursor = VIDEO_MASK + c;
+    cursor++;
+    columnCount++;
 }
 
 void ReadService(tf_t *tf_p)

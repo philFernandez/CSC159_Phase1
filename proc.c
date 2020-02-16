@@ -20,7 +20,7 @@ void Clock()
 
     while (1)
     {
-        if (sys_tick % 100 == 0)
+        if (sys_tick % TIME_SIZE == NUL)
         {
             toStr(sys_tick / 100, str);
             p = VIDEO_START;
