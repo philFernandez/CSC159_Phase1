@@ -73,9 +73,9 @@ void main(void)
     // Create Clock proc
     CreateProc(Clock);
 
-    /*cur_pid = DeQ(&ready_q);*/
-    /*// call Loader to load the trapframe of the new process*/
-    /*Loader(pcb[cur_pid].tf_p);*/
+    cur_pid = DeQ(&ready_q);
+    // call Loader to load the trapframe of the new process
+    Loader(pcb[cur_pid].tf_p);
 
     fill_gate(&intr_table[GET_TIME], (int)GetTimeEntry, get_cs(), ACC_INTR_GATE,
               0);
@@ -83,6 +83,7 @@ void main(void)
     fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
 
     CreateProc(Init);
+
     cur_pid = DeQ(&ready_q);
     Loader(pcb[cur_pid].tf_p);
 }
