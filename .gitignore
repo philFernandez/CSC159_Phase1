@@ -1,2 +1,5 @@
 .vim/
 .idea/
+Makefile
+make.*
+*.o
