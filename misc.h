@@ -18,5 +18,9 @@ void Bzero(char*, unsigned);
 
 void MemCpy(char*, char*, unsigned);
 
+void StrAdd(char, char*);
+
+void StrCpy(char*, char*);
+
 #endif
 

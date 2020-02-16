@@ -2,27 +2,39 @@
 // OS service calls
 // clang-format off
 
+// returns current system time in seconds
 int get_time_call(void) {    // phase2
    int time;
 
-   asm("int $48;            // jmp to inter table entry 48
-        movl %%eax, %0"     // after intr, copy eax to time
-       : "=g" (time)        // output line of asm(), one item
-       :                    // input line of asm(), none
-       : "eax"              // list of clobbered register(s)
+   asm("int $48;
+        movl %%eax, %0"
+       : "=g" (time)      // time is output, obtained from eax
+       :
+       : "eax"
    );
 
    return time;
 }
 
+// display a string to target console
 void write_call(char *str) {
    asm("movl %0, %%eax;
         int $49"
        :
-       : "g" ((int)str)
+       : "g" ((int)str)  // str is input, moved into eax
        : "eax"
    );
 }
 
-/*program read_call()...*/
+// read in a string from target keyboard (move keyboard input into str)
+// See pg 96 for solutions to problems
+void read_call(char *str) {
+    asm("int $50;
+        movl %%eax, %0"
+        : "=g" (str)
+        :
+        : "eax"
+    );
 
+    return str;
+}
