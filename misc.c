@@ -49,14 +49,14 @@ void EnQ(int item, q_t *ptr)
 }
 
 /**
- * Fill string with '\0'
+ * Fill string with NUL
  */
 void Bzero(char *s, unsigned n)
 {
     int i;
     for (i = 0; i < n; i++)
     {
-        s[i] = '\0';
+        s[i] = NUL;
     }
 }
 
