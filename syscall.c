@@ -1,7 +1,6 @@
 // syscall.c
 // OS service calls
-
-#include "kernel.h"
+// clang-format off
 
 int get_time_call(void) {    // phase2
    int time;
@@ -25,4 +24,4 @@ void write_call(char *str) {
    );
 }
 
-program read_call()...
+/*program read_call()...*/
