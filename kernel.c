@@ -40,7 +40,7 @@ void TimerService(tf_t *tf_p)
 
 void GetTimeService(tf_t *tf_p)
 {
-    tf_p->eax = cur_second;
+    tf_p->eax = sys_tick / 100;
     Loader(tf_p);
 }
 
@@ -104,6 +104,7 @@ void ReadService(tf_t *tf_p)
     pcb[cur_pid].tf_p = tf_p;
 
     EnQ(cur_pid, &kb.wait_q);
+
     pcb[cur_pid].state = WAIT;
     cur_pid = NA;
 

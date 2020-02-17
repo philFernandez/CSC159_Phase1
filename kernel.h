@@ -71,7 +71,6 @@ typedef struct
 
 extern int cur_pid;
 extern unsigned sys_tick;
-extern int cur_second;
 extern q_t unused_q, ready_q;
 extern pcb_t pcb[PROC_SIZE];
 extern char stack[PROC_SIZE][STACK_SIZE];

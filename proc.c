@@ -22,8 +22,7 @@ void Clock()
     {
         if (sys_tick % TIME_SIZE == NUL)
         {
-            cur_second = sys_tick / 100;
-            toStr(cur_second, str);
+            toStr(sys_tick / 100, str);
             p = (unsigned short *)VIDEO_START;
             p += 75;
 
@@ -70,11 +69,10 @@ void Init()
     int cur_time;
     char time_str[] = "    ";
     char answer_str[ANS_STR_SZ];
+
     while (1)
     {
         cur_time = get_time_call();
-        if (cur_time < 1)
-            cur_time = 1;
         toStr(cur_time, time_str);
         write_call("The time is ");
         write_call(time_str); // pass "The time is "

@@ -2,7 +2,6 @@
 // OS service calls
 
 // clang-format off
-#include <spede/stdio.h>
 #include "kernel.h"
 
 // returns current system time in seconds
@@ -32,7 +31,7 @@ void write_call(char *str) {
 // read in a string from target keyboard (move keyboard input into str)
 // See pg 96 for solutions to problems
 void read_call(char *str) {
-    asm("movl %%eax, %0;
+    asm("movl %0, %%eax;
          int $50"
          :
          : "g" ((int)str)
