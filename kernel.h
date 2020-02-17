@@ -65,7 +65,7 @@ typedef struct
 
 typedef struct
 {
-    int buffer[STR_SIZE];
+    char buffer[STR_SIZE];
     q_t wait_q;
 } kb_t;
 

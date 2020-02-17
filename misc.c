@@ -67,6 +67,8 @@ void StrAdd(char ch, char *s)
         i++;
     s[i] = ch;
     s[i + 1] = NUL;
+
+    /*printf("StrAdd : %s\n", s);*/
 }
 
 void StrCpy(char *src, char *dst)
@@ -78,7 +80,5 @@ void StrCpy(char *src, char *dst)
         i++;
     }
     dst[i] = '\0'; // Properly delimiting dst
-
-    printf("%s\n", dst);
 }
 

@@ -24,7 +24,7 @@ void Clock()
         {
             cur_second = sys_tick / 100;
             toStr(cur_second, str);
-            p = VIDEO_START;
+            p = (unsigned short *)VIDEO_START;
             p += 75;
 
             for (i = 0; str[i] != NUL; i++)
@@ -76,7 +76,6 @@ void Init()
         if (cur_time < 1)
             cur_time = 1;
         toStr(cur_time, time_str);
-        printf("time_str : %s\n", time_str);
         write_call("The time is ");
         write_call(time_str); // pass "The time is "
         write_call(".\n");
