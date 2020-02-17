@@ -78,5 +78,7 @@ void StrCpy(char *src, char *dst)
         i++;
     }
     dst[i] = '\0'; // Properly delimiting dst
+
+    printf("%s\n", dst);
 }
 

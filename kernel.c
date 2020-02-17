@@ -92,6 +92,11 @@ void WriteChar(char ch) // ask about
         cursor++;
         columnCount++;
     }
+    else // Move cursor to new line
+    {
+        cursor += (80 - columnCount);
+        columnCount = 0;
+    }
 }
 
 void ReadService(tf_t *tf_p)
@@ -114,11 +119,11 @@ void KbService(char c)
         StrAdd(c, kb.buffer);
     else
     {
+        char *procStrSpace;
         StrAdd(NUL, kb.buffer);
         cur_pid = DeQ(&kb.wait_q);
-
-        StrCpy(kb.buffer, pcb[cur_pid].tf_p->eax);
-
+        procStrSpace = (char *)&pcb[cur_pid].tf_p->eax;
+        StrCpy(kb.buffer, procStrSpace);
         pcb[cur_pid].state = READY;
         EnQ(cur_pid, &ready_q);
         Bzero(kb.buffer, sizeof(kb.buffer));
