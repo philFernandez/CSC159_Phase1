@@ -104,7 +104,6 @@ void ReadService(tf_t *tf_p)
     pcb[cur_pid].tf_p = tf_p;
 
     EnQ(cur_pid, &kb.wait_q);
-
     pcb[cur_pid].state = WAIT;
     cur_pid = NA;
 
