@@ -5,12 +5,12 @@
 #include "kernel.h"
 
 // returns current system time in seconds
-int get_time_call(void) {    // phase2
+int get_time_call(void) {
    int time;
 
    asm("int $48;
         movl %%eax, %0"
-       : "=g" (time)      // time is output, obtained from eax
+       : "=g" (time)
        :
        : "eax"
    );
@@ -23,13 +23,12 @@ void write_call(char *str) {
    asm("movl %0, %%eax;
         int $49"
        :
-       : "g" ((int)str)  // str is input, moved into eax
+       : "g" ((int)str)
        : "eax"
    );
 }
 
-// read in a string from target keyboard (move keyboard input into str)
-// See pg 96 for solutions to problems
+// read in a string from target keyboard
 void read_call(char *str) {
     asm("movl %%eax, %0;
          int $50"

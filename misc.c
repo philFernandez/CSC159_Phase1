@@ -63,22 +63,20 @@ void Bzero(char *s, unsigned n)
 void StrAdd(char ch, char *s)
 {
     int i = 0;
-    while (s[i] != NUL) // Loop ends when NULL is reached in src
+    while (s[i] != NUL)
         i++;
     s[i] = ch;
     s[i + 1] = NUL;
-
-    /*printf("StrAdd : %s\n", s);*/
 }
 
 void StrCpy(char *src, char *dst)
 {
     int i = 0;
-    while (src[i] != '\0') // Loop ends when NULL is reached in src
+    while (src[i] != NUL)
     {
         dst[i] = src[i];
         i++;
     }
-    dst[i] = '\0'; // Properly delimiting dst
+    dst[i] = NUL;
 }
 

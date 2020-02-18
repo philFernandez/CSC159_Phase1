@@ -46,7 +46,6 @@ void GetTimeService(tf_t *tf_p)
 
 void WriteService(tf_t *tf_p)
 {
-    // eax has the address to the string we need to print
     char *charsToWrite = (char *)tf_p->eax;
 
     while (*charsToWrite != NUL)
@@ -55,7 +54,6 @@ void WriteService(tf_t *tf_p)
         charsToWrite++;
     }
 
-    // Call loader to resume process that was happening before WriteChar?
     Loader(tf_p);
 }
 
@@ -107,7 +105,6 @@ void ReadService(tf_t *tf_p)
     pcb[cur_pid].state = WAIT;
     cur_pid = NA;
 
-    /*printf("READ SERVICE: %s\n", (char *)tf_p->eax);*/
     Swapper();
     Loader(pcb[cur_pid].tf_p);
 }
@@ -118,7 +115,11 @@ void KbService(char c)
     WriteChar(c);
 
     if (c != CR)
+    {
         StrAdd(c, kb.buffer);
+        return;
+    }
+
     else
     {
         StrAdd(NUL, kb.buffer);
@@ -137,7 +138,6 @@ void Swapper(void)
         cons_printf("Kernel: panic, no more process ready to run!\n");
         breakpoint();
     }
-
     cur_pid = DeQ(&ready_q);
     pcb[cur_pid].run_tick = 0;
     pcb[cur_pid].state = RUN;

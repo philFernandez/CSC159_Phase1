@@ -8,12 +8,12 @@
 #include "misc.h"
 #include "proc.h"
 
-int cur_pid; // For currently selected PID
+int cur_pid;
 q_t unused_q;
 q_t ready_q;
 kb_t kb;
 
-pcb_t pcb[PROC_SIZE]; // Process control block
+pcb_t pcb[PROC_SIZE];
 
 char stack[PROC_SIZE][STACK_SIZE];
 
