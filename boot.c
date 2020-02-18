@@ -78,6 +78,7 @@ void main(void)
 
     fill_gate(&intr_table[READ], (int)ReadEntry, get_cs(), ACC_INTR_GATE, 0);
 
+    // I think these 2 lines need to be below all fill_gate calls?
     outportb(PIC_MASK_REG, PIC_MASK);
     asm("sti");
 
