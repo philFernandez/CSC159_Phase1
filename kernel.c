@@ -114,6 +114,7 @@ void ReadService(tf_t *tf_p)
 
 void KbService(char c)
 {
+    int pid;
     WriteChar(c);
 
     if (c != CR)
@@ -121,10 +122,10 @@ void KbService(char c)
     else
     {
         StrAdd(NUL, kb.buffer);
-        cur_pid = DeQ(&kb.wait_q);
-        StrCpy(kb.buffer, (char *)pcb[cur_pid].tf_p->eax);
-        pcb[cur_pid].state = READY;
-        EnQ(cur_pid, &ready_q);
+        pid = DeQ(&kb.wait_q);
+        StrCpy(kb.buffer, (char *)pcb[pid].tf_p->eax);
+        pcb[pid].state = READY;
+        EnQ(pid, &ready_q);
         Bzero(kb.buffer, STR_SIZE);
     }
 }
