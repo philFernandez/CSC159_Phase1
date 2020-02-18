@@ -31,10 +31,9 @@ void write_call(char *str) {
 // read in a string from target keyboard (move keyboard input into str)
 // See pg 96 for solutions to problems
 void read_call(char *str) {
-    asm("movl %0, %%eax;
+    asm("movl %%eax, %0;
          int $50"
          :
          : "g" ((int)str)
-         : "eax"
     );
 }
