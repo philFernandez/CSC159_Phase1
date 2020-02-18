@@ -117,7 +117,10 @@ void KbService(char c)
     WriteChar(c);
 
     if (c != CR)
+    {
         StrAdd(c, kb.buffer);
+        return;
+    }
     else
     {
         /*char *procStrSpace;*/
