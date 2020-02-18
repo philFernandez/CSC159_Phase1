@@ -120,10 +120,9 @@ void KbService(char c)
         StrAdd(c, kb.buffer);
     else
     {
-        /*char *procStrSpace;*/
         StrAdd(NUL, kb.buffer);
         cur_pid = DeQ(&kb.wait_q);
-        StrCpy(kb.buffer, (char *)&pcb[cur_pid].tf_p->eax);
+        StrCpy(kb.buffer, (char *)pcb[cur_pid].tf_p->eax);
         pcb[cur_pid].state = READY;
         EnQ(cur_pid, &ready_q);
         Bzero(kb.buffer, STR_SIZE);
