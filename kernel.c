@@ -119,6 +119,7 @@ void KbService(char c)
         StrAdd(c, kb.buffer);
         return;
     }
+
     else
     {
         StrAdd(NUL, kb.buffer);
