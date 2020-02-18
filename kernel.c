@@ -107,6 +107,7 @@ void ReadService(tf_t *tf_p)
     pcb[cur_pid].state = WAIT;
     cur_pid = NA;
 
+    /*printf("READ SERVICE: %s\n", (char *)tf_p->eax);*/
     Swapper();
     Loader(pcb[cur_pid].tf_p);
 }
@@ -119,11 +120,10 @@ void KbService(char c)
         StrAdd(c, kb.buffer);
     else
     {
-        char *procStrSpace;
+        /*char *procStrSpace;*/
         StrAdd(NUL, kb.buffer);
         cur_pid = DeQ(&kb.wait_q);
-        procStrSpace = (char *)&pcb[cur_pid].tf_p->eax;
-        StrCpy(kb.buffer, procStrSpace);
+        StrCpy(kb.buffer, (char *)&pcb[cur_pid].tf_p->eax);
         pcb[cur_pid].state = READY;
         EnQ(cur_pid, &ready_q);
         Bzero(kb.buffer, STR_SIZE);

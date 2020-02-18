@@ -7,7 +7,7 @@
 #include "spede.h"
 #include "kernel.h"
 #include "syscall.h"
-#define ANS_STR_SZ 96
+#define ANS_STR_SZ 100
 
 void toStr(int, char *);
 int strLen(char *);
